@@ -223,7 +223,8 @@ const Input = () => {
                 <input type="number" className="form-control" value={numOfCat} onChange={(e)=>{setNumOfCat(e.target.value)}} />
                 <button type="button" className="btn btn-primary" onClick={handleEnterCategories} >Enter</button>
             </div>   
-            <div className="tables">
+            {(numOfCat !== 0) &&
+              <div className="tables">
               <table className="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -274,6 +275,7 @@ const Input = () => {
                 </tbody>
               </table>
             </div>
+            }
         </div>
         
         <div className="enter_subcategory input__container">
@@ -282,7 +284,8 @@ const Input = () => {
                 <input type="number" value={numOfSubCat} onChange={(e)=>{setNumOfSubCat(e.target.value)}} className="form-control"/>
                 <button type="button" className="btn btn-primary" onClick={handleEnterSubCategories} >Enter</button>
             </div>   
-            <div className="tables">
+            {(numOfSubCat !== 0) &&
+              <div className="tables">
               <table className="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -330,6 +333,7 @@ const Input = () => {
                 </tbody>
               </table>
             </div>
+            }
         </div>
 
         <div className="result_button">

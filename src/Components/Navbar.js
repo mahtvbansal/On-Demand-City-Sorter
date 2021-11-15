@@ -7,7 +7,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            On Demand Sorter
+            On Demand City Sorter
           </a>
           {/* <button
             className="navbar-toggler"
