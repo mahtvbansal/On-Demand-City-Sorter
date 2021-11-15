@@ -173,29 +173,27 @@ const Input = () => {
     <>
       <div className="container my-3">
         <h1 className="heading">INPUT</h1>
-        <h3>Enter Your Data in json Format</h3>
-        <div className="mb-3">
-          <textarea
-            className="form-control"
-            id="jsonInput"
-            rows="8"
-            onChange={(ev) => {
-              setData(ev.target.value);
-            }}
-            value={data}
-          ></textarea>
-        </div>
-        {/* <button type="button" className="btn btn-primary" onClick={enterData}>Enter</button> */}
 
-        <div className="enter_cities">
-          <div className="mb-3">
-            <label htmlFor="enter_category" className="form-label">
-              <h3>Enter Number of cities required</h3>
-            </label>
-            <input
-              type="number"
-              id="numOfCities"
+        <div className="input__container">
+          <h4>Enter Your Data in json Format</h4>
+          <div className="mb-3 input__fields">
+            <textarea
               className="form-control"
+              id="jsonInput"
+              rows="8"
+              onChange={(ev) => {
+                setData(ev.target.value);
+              }}
+              value={data}
+            ></textarea>
+          </div>
+        </div>
+  
+        <div className="mb-3 input__container">
+         <h4>Enter Number of cities required</h4>
+          <div className="input__fields">
+            <input
+              type="number" id="numOfCities" className="form-control"
               onChange={(en) => {
                 setNumOfCities(en.target.value);
               }}
@@ -203,12 +201,10 @@ const Input = () => {
             />
           </div>
         </div>
-
-        <div className="enter_maxrent">
-          <div className="mb-3">
-            <label htmlFor="enter_maxrent" className="form-label">
-              <h3>Enter Maximum Rent</h3>
-            </label>
+  
+        <div className="mb-3 input__container">
+         <h4>Enter Maximum Rent</h4>
+          <div className="input__fields">
             <input
               type="number"
               id="maxRent"
@@ -220,14 +216,14 @@ const Input = () => {
             />
           </div>
         </div>
-
-        <div className="enter_category">
-            <div className="mb-3">
-                <label htmlFor="enter_category" className="form-label"><h3>Enter Total number of categories</h3></label>
+        
+        <div className="enter_category input__container">
+          <h4>Enter Total number of categories</h4>
+            <div className="mb-3 input__fields flex_cat">
                 <input type="number" className="form-control" value={numOfCat} onChange={(e)=>{setNumOfCat(e.target.value)}} />
                 <button type="button" className="btn btn-primary" onClick={handleEnterCategories} >Enter</button>
             </div>   
-            <div className="categories">
+            <div className="tables">
               <table className="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -279,16 +275,14 @@ const Input = () => {
               </table>
             </div>
         </div>
-        <hr></hr>
-
-
-        <div className="enter_subcategory">
-            <div className="mb-3">
-                <label htmlFor="enter_category" className="form-label"><h3>Enter Total number of Sub-categories</h3></label>
+        
+        <div className="enter_subcategory input__container">
+         <h4>Enter Total number of Sub-categories</h4>
+            <div className="mb-3 input__fields flex_cat">
                 <input type="number" value={numOfSubCat} onChange={(e)=>{setNumOfSubCat(e.target.value)}} className="form-control"/>
                 <button type="button" className="btn btn-primary" onClick={handleEnterSubCategories} >Enter</button>
             </div>   
-            <div className="categories">
+            <div className="tables">
               <table className="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -300,44 +294,43 @@ const Input = () => {
                 </thead>
                 <tbody>
                     {
-                        subCategory_Input.map((elem)=>{
-                            return (
-                                <tr key={elem.id}>
-                                    <th scope="row"><input type="text" className="form-control" 
-                                    value={subCategory_Array[elem.id].subCat_name} 
-                                    onChange={(e)=>{ 
-                                        let tempSubCategoryInput = [...subCategory_Array];
-                                        tempSubCategoryInput[elem.id].subCat_name = e.target.value;
-                                        setSubCategory_Array(tempSubCategoryInput);
-                                    }} 
-                                    placeholder="Name" /></th>
+                      subCategory_Input.map((elem)=>{
+                          return (
+                              <tr key={elem.id}>
+                                  <th scope="row"><input type="text" className="form-control" 
+                                  value={subCategory_Array[elem.id].subCat_name} 
+                                  onChange={(e)=>{ 
+                                      let tempSubCategoryInput = [...subCategory_Array];
+                                      tempSubCategoryInput[elem.id].subCat_name = e.target.value;
+                                      setSubCategory_Array(tempSubCategoryInput);
+                                  }} 
+                                  placeholder="Name" /></th>
 
-                                    <td><input type="text" className="form-control" 
-                                    value={subCategory_Array[elem.id].min_cities} 
-                                    onChange={(e)=>{ 
-                                        let tempSubCategoryInput = [...subCategory_Array];
-                                        tempSubCategoryInput[elem.id].min_cities = e.target.value;
-                                        setSubCategory_Array(tempSubCategoryInput);
-                                    }} 
-                                    placeholder="Min" /></td>
+                                  <td><input type="text" className="form-control" 
+                                  value={subCategory_Array[elem.id].min_cities} 
+                                  onChange={(e)=>{ 
+                                      let tempSubCategoryInput = [...subCategory_Array];
+                                      tempSubCategoryInput[elem.id].min_cities = e.target.value;
+                                      setSubCategory_Array(tempSubCategoryInput);
+                                  }} 
+                                  placeholder="Min" /></td>
 
-                                    <td><input type="text" className="form-control" 
-                                    value={subCategory_Array[elem.id].max_cities} 
-                                    onChange={(e)=>{ 
-                                        let tempSubCategoryInput = [...subCategory_Array];
-                                        tempSubCategoryInput[elem.id].max_cities = e.target.value;
-                                        setSubCategory_Array(tempSubCategoryInput);
-                                    }} 
-                                    placeholder="Max" /></td> 
-                                </tr>
-                            )
-                        })
+                                  <td><input type="text" className="form-control" 
+                                  value={subCategory_Array[elem.id].max_cities} 
+                                  onChange={(e)=>{ 
+                                      let tempSubCategoryInput = [...subCategory_Array];
+                                      tempSubCategoryInput[elem.id].max_cities = e.target.value;
+                                      setSubCategory_Array(tempSubCategoryInput);
+                                  }} 
+                                  placeholder="Max" /></td> 
+                              </tr>
+                          )
+                      })
                     }
                 </tbody>
               </table>
             </div>
         </div>
-        <hr></hr>
 
         <div className="result_button">
           <button
@@ -349,33 +342,36 @@ const Input = () => {
             Show result
           </button>
         </div>
+
       </div>
       <hr></hr>
 
       <div className="my-3 container">
       <h1 className="heading">OUTPUT</h1>
-        <table className="table table-bordered table-striped table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Places</th>
-              {/* <th scope="col">Last</th> */}
-              <th scope="col">Total Rent</th>
-            </tr>
-          </thead>
-          <tbody>
-            {result.map((Elem) => {
-              return (
-                <tr key={Elem.Places}>
-                  <th scope="row">{result.indexOf(Elem) + 1}</th>
-                  <td>{Elem.Places.toString()}</td>
-                  <td>{Elem.Total_Rent}</td>
-                </tr>
-              );
-            })
-            }
-          </tbody>
-        </table>
+        <div className="tables">
+          <table className="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Places</th>
+                {/* <th scope="col">Last</th> */}
+                <th scope="col">Total Rent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {result.map((Elem) => {
+                return (
+                  <tr key={Elem.Places}>
+                    <th scope="row">{result.indexOf(Elem) + 1}</th>
+                    <td>{Elem.Places.toString()}</td>
+                    <td>{Elem.Total_Rent}</td>
+                  </tr>
+                );
+              })
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
