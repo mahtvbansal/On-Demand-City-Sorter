@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+// import Spinner from "./Spinner";
 // import { combinations, result } from "./Function.js";
+import LoadingBar from 'react-top-loading-bar'
 
 const Input = () => {
 
@@ -13,71 +15,160 @@ const Input = () => {
     const [numOfSubCat, setNumOfSubCat] = useState(0);
     const [subCategory_Array, setSubCategory_Array] = useState([]);
     const [subCategory_Input, setSubCategory_Input] = useState([]);
+    const [progress, setProgress] = useState(0)
+    // const [loading, setLoading] = useState(false);
 
+    const rentSum = (cities) => {
+      let sum = 0;
+      cities.forEach(city => {sum = sum + parseInt(city.Monthly_Rent)})
+      return sum;
+    }
+
+    const cityNames = (cities) => {
+      let Names = [];
+      cities.forEach(city => {
+          Names.push(city.Place);
+      })
+      return Names;
+    }
+
+    const handleCat = (cities) => {
+      let flag = true;
+      for(let i=0; i<category_Array.length; i++) {
+          let number = 0;
+          cities.forEach(city =>{
+              if(city.Category === category_Array[i].cat_name){
+                  number = number + 1;
+              }
+          })
+          if(number >= Number(category_Array[i].min_cities) && number <= Number(category_Array[i].max_cities)){
+              
+          }else{
+              flag =false;
+              return flag;
+          }
+      }
+      return flag;
+    }
+
+    const handleCatMax = (cities) => {
+      let flag = true;
+      for(let i=0; i<category_Array.length; i++) {
+          let number = 0;
+          cities.forEach(city =>{
+              if(city.Category === category_Array[i].cat_name){
+                  number = number + 1;
+              }
+          })
+          if(number <= Number(category_Array[i].max_cities)){
+              
+          }else{
+              flag =false;
+              return flag;
+          }
+      }
+      return flag;
+    }
+
+    const handleSubCat = (cities) => {
+      let flag = true;
+      for(let i=0; i<subCategory_Array.length; i++) {
+          let number = 0;
+          cities.forEach(city =>{
+              if(city.Sub_Category === subCategory_Array[i].subCat_name){
+                  number = number + 1;
+              }
+          })
+          if(number >= Number(subCategory_Array[i].min_cities) && number <= Number(subCategory_Array[i].max_cities)){
+              
+          }else{
+              flag =false;
+              return flag;
+          }
+      }
+
+      return flag;
+    }
+
+    const handleSubCatMax = (cities) => {
+      let flag = true;
+      for(let i=0; i<subCategory_Array.length; i++) {
+          let number = 0;
+          cities.forEach(city =>{
+              if(city.Sub_Category === subCategory_Array[i].subCat_name){
+                  number = number + 1;
+              }
+          })
+          if(number <= Number(subCategory_Array[i].max_cities)){
+              
+          }else{
+              flag =false;
+              return flag;
+          }
+      }
+      return flag;
+    }
 
     const combinations = (elements , k, max_Rent, temp_Result) => {
-        const keepGoing = (elem) => {
-            if(elem.length === k){
-                return false;
-            }
-            return true;
-        }
-    
-        const rentSum = (cities) => {
-            let sum = 0;
-            cities.forEach(city => {sum = sum + parseInt(city.Monthly_Rent)})
-            return sum;
-        }
-    
-        const cityNames = (cities) => {
-            let Names = [];
-            cities.forEach(city => {
-                Names.push(city.Place);
-            })
-            return Names;
-        }
 
-        const handleCat = (cities) => {
-            let flag = true;
-            for(let i=0; i<category_Array.length; i++) {
-                let number = 0;
-                cities.forEach(city =>{
-                    if(city.Category === category_Array[i].cat_name){
-                        number = number + 1;
-                    }
-                })
-                if(number >= Number(category_Array[i].min_cities) && number <= Number(category_Array[i].max_cities)){
-                    
-                }else{
-                    flag =false;
-                    return flag;
-                }
-            }
+      // setLoading(true);
 
-            return flag;
+      const keepGoing = (elem) => {
+        if(elem.length === k){
+            return false;
         }
+        return true;
+      }
+    // const combinations = (elements , elements_length, index, temp_Result, combWithDetail, start) => {
+        
 
-        const handleSubCat = (cities) => {
-            let flag = true;
-            for(let i=0; i<subCategory_Array.length; i++) {
-                let number = 0;
-                cities.forEach(city =>{
-                    if(city.Sub_Category === subCategory_Array[i].subCat_name){
-                        number = number + 1;
-                    }
-                })
-                if(number >= Number(subCategory_Array[i].min_cities) && number <= Number(subCategory_Array[i].max_cities)){
-                    
-                }else{
-                    flag =false;
-                    return flag;
-                }
-            }
+        // if(index === Number(numOfCities)){
 
-            return flag;
-        }
+        //   console.log("combWithDetail");
 
-    
+        //   let temp = {Places : [], Total_Rent: 0};
+
+        //   if(rentSum(combWithDetail) <= Number(maxRent)){
+        //     if(Number(numOfCat) + Number(numOfSubCat) === 0){
+        //         temp.Places = cityNames(combWithDetail);
+        //         temp.Total_Rent = rentSum(combWithDetail);
+        //         temp_Result.push(temp);
+        //     }
+        //     else if(Number(numOfSubCat) === 0 && handleCat(combWithDetail)){
+        //         temp.Places = cityNames(combWithDetail);
+        //         temp.Total_Rent = rentSum(combWithDetail);
+        //         temp_Result.push(temp);
+        //     }
+        //     else if(Number(numOfCat) === 0 && handleSubCat(combWithDetail)){
+        //         temp.Places = cityNames(combWithDetail);
+        //         temp.Total_Rent = rentSum(combWithDetail);
+        //         temp_Result.push(temp);
+        //     }
+        //     else if(handleSubCat(combWithDetail) && handleCat(combWithDetail)){
+        //         temp.Places = cityNames(combWithDetail);
+        //         temp.Total_Rent = rentSum(combWithDetail);
+        //         temp_Result.push(temp);
+        //     }
+        //   }
+        //   return;
+        // }
+
+        // if(i >= elements_length){
+        //     return;
+        // }
+        // for(let i = start; i<= elements_length - 1 && ((elements_length - 1)-i+1 >= Number(numOfCities) - index); i++ ){
+        //     combWithDetail[index] = elements[i];
+        //     combinations(elements , elements_length, index+1, temp_Result, combWithDetail, i+1);
+        // }
+        
+        // combWithDetail[index] = elements[i];
+        // combinations(elements , elements_length, index+1, temp_Result, i+1, combWithDetail);
+
+        // combinations(elements , elements_length, index, temp_Result, i+1, combWithDetail);
+
+        // setResult(temp_Result);
+
+
         if(elements.length === 0)
                 return [[]];
             
@@ -88,50 +179,95 @@ const Input = () => {
         const combsWithFirst = [];
         
         combsWithoutFirst.forEach(comb =>{
+
+            // let count = 0;
+            // if(count <= 1000){
+            //   alert("Your result has more than 1000 combinations & first 1000 combinations are shown");
+            //   setResult(temp_Result);
+            //   return ;
+            // }
     
             let temp = {Places : [], Total_Rent: 0};
     
             let combWithDetail = [...comb, firstEl];
-            if(keepGoing(combWithDetail)){
-                combsWithFirst.push(combWithDetail);
-            }else if(rentSum(combWithDetail) <= max_Rent){ 
+            if(!keepGoing(combWithDetail) && rentSum(combWithDetail) <= max_Rent){
                 if(Number(numOfCat) + Number(numOfSubCat) === 0){
-                    temp.Places = cityNames(combWithDetail);
-                    temp.Total_Rent = rentSum(combWithDetail);
+                  temp.Places = cityNames(combWithDetail);
+                  temp.Total_Rent = rentSum(combWithDetail);
+                  if(temp_Result.length <= 1000){
                     temp_Result.push(temp);
-                }
-                else if(Number(numOfSubCat) === 0 && handleCat(combWithDetail)){
-                    temp.Places = cityNames(combWithDetail);
-                    temp.Total_Rent = rentSum(combWithDetail);
-                    temp_Result.push(temp);
-                }
-                else if(Number(numOfCat) === 0 && handleSubCat(combWithDetail)){
-                    temp.Places = cityNames(combWithDetail);
-                    temp.Total_Rent = rentSum(combWithDetail);
-                    temp_Result.push(temp);
-                }
-                else if(handleSubCat(combWithDetail) && handleCat(combWithDetail)){
-                    temp.Places = cityNames(combWithDetail);
-                    temp.Total_Rent = rentSum(combWithDetail);
-                    temp_Result.push(temp);
-                }
+                  } else return [];
+                  console.log("pushed");
+              }
+              else if(Number(numOfSubCat) === 0 && handleCat(combWithDetail)){
+                  temp.Places = cityNames(combWithDetail);
+                  temp.Total_Rent = rentSum(combWithDetail);
+                  temp_Result.push(temp);
+                  console.log("pushed");
+              }
+              else if(Number(numOfCat) === 0 && handleSubCat(combWithDetail)){
+                  temp.Places = cityNames(combWithDetail);
+                  temp.Total_Rent = rentSum(combWithDetail);
+                  temp_Result.push(temp);
+                  console.log("pushed");
+              }
+              else if(handleSubCat(combWithDetail) && handleCat(combWithDetail)){
+                  temp.Places = cityNames(combWithDetail);
+                  temp.Total_Rent = rentSum(combWithDetail);
+                  temp_Result.push(temp);
+                  console.log("pushed");
+              }
+            }
+            else if(keepGoing(combWithDetail && rentSum(combWithDetail) <= max_Rent)){
+              if(Number(numOfCat) + Number(numOfSubCat) === 0){
+                combsWithFirst.push(combWithDetail);
+              }
+              else if(Number(numOfSubCat) === 0 && handleCatMax(combWithDetail)){
+                combsWithFirst.push(combWithDetail);
+              }
+              else if(Number(numOfCat) === 0 && handleSubCatMax(combWithDetail)){
+                combsWithFirst.push(combWithDetail);
+              }
+              else if(handleSubCatMax(combWithDetail) && handleCatMax(combWithDetail)){
+                combsWithFirst.push(combWithDetail);
+              }
             }
         });
         setResult(temp_Result);
+        if( temp_Result.length >= 500){
+          console.log("first return");
+          return [];
+        }else
         return [ ...combsWithoutFirst, ...combsWithFirst ];
     }
 
-  const showResult = () => {
-    setResult([]);
-    if (data && numOfCities && maxRent) {
-        let tempResult = [];
-        const table = JSON.parse(data);
-        combinations(table, Number(numOfCities), Number(maxRent), tempResult);
-
-    } else {
-      alert("Please fill the data properly");
-    }
-  };
+    const showResult = () => {
+      setProgress(progress +10);
+      setResult([]);
+      // setLoading(false);
+      if (data && numOfCities && maxRent) {
+          
+          
+          let tempResult = [];
+          setProgress(progress +25);
+          // let combWithDetail = new Array(Number(numOfCities));
+          const table = JSON.parse(data);
+          console.log(table.length);
+          setProgress(progress +40);
+          // combinations(table, table.length, 0, tempResult, combWithDetail, 0);
+          let comb_Array = combinations(table, Number(numOfCities), Number(maxRent), tempResult);
+          setProgress(progress +70);
+          if(comb_Array.length === 0){
+            alert("Your result has more than 500 combinations");
+          }
+          console.log("result");
+      } else {
+        alert("Please fill the data properly");
+      }
+      setProgress(100);
+      // setLoading(false);
+      // console.log(result);
+    };
 
   const makeCategoryInputArray = (k) => {
       let categoryInputArray = [];
@@ -171,6 +307,11 @@ const Input = () => {
 
   return (
     <>
+    <LoadingBar
+        color='#f11946'
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <div className="container my-3">
         <h1 className="heading">INPUT</h1>
 
@@ -345,6 +486,7 @@ const Input = () => {
           >
             Show result
           </button>
+          {/* {loading && <Spinner />} */}
         </div>
 
       </div>
