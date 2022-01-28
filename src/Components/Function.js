@@ -121,60 +121,80 @@
 //     }
 // ]
 
-const result = [];
-
-
-const combinations = (elements , k ) => {
-    console.log(result);
-
-    const keepGoing = (elem) => {
-        if(elem.length === k){
-            return false;
-        }
-        return true;
-    }
-
-    const rentSum = (cities) => {
-        let sum = 0;
-        cities.forEach(city => {sum = sum + parseInt(city.Monthly_Rent)})
-        return sum;
-    }
-
-    const cityNames = (cities) => {
-        let Names = [];
-        cities.forEach(city => {
-            Names.push(city.Place);
-        })
-        return Names;
-    }
-
-    if(elements.length === 0)
-            return [[]];
-        
-    const firstEl = elements[0];
-    const rest = elements.slice(1);
-
-    const combsWithoutFirst = combinations(rest, k);
-    const combsWithFirst = [];
-    
-    combsWithoutFirst.forEach(comb =>{
-
-        let temp = {Places : [], Total_Rent: 0};
-
-        let combWithDetail = [...comb, firstEl];
-        if(keepGoing(combWithDetail)){
-            combsWithFirst.push(combWithDetail);
-        }else if(rentSum(combWithDetail) <= 350000){ 
-            console.log("Hello");
-            temp.Places = cityNames(combWithDetail);
-            temp.Total_Rent = rentSum(combWithDetail);
-            result.push(temp);
-        }
+function convertComb(comb){
+    let temp = {Places: [], total_Rent: 0};
+    comb.forEach(element => {
+        temp.Places.push(element.Place);
     });
+    temp.total_Rent = rentSum(comb);
 
-    return [ ...combsWithoutFirst, ...combsWithFirst ];
+    return temp;
 }
 
-// combinations(Data , 5);
+function rentSum(comb){
+    let rentSum = 0;
+    comb.forEach(element => {
+        rentSum += Number(element.Monthly_Rent);
+    });
+    return rentSum;
+}
 
-export  {result, combinations};
+function checkCategories(cities, category_Array){
+    let flag = true;
+    for(let i=0; i < category_Array.length; i++) {
+        let number = 0;
+        cities.forEach(city =>{
+            if(city.Category === category_Array[i].cat_name){
+                number = number + 1;
+            }
+        })
+        if(!(number >= Number(category_Array[i].min_cities) && number <= Number(category_Array[i].max_cities)))
+           return false; 
+    }
+    return flag;
+}
+
+const checkSubCategories = (cities, subCategory_Array) => {
+    let flag = true;
+    for(let i=0; i<subCategory_Array.length; i++) {
+        let number = 0;
+        cities.forEach(city =>{
+            if(city.Sub_Category === subCategory_Array[i].subCat_name){
+                number = number + 1;
+            }
+        })
+        if(!(number >= Number(subCategory_Array[i].min_cities) && number <= Number(subCategory_Array[i].max_cities)))
+            return false;
+    }
+
+    return flag;
+}
+
+
+export const combinations = (Data, comb, start, index, numOfCities, maxRent, category_Array, subCategory_Array, ans ) => {
+    if(rentSum(comb) > maxRent){
+        return ans;
+    }
+
+    if(!checkCategories(comb, category_Array)) return ans;
+    if(!checkSubCategories(comb, subCategory_Array)) return ans;
+
+    if (index === numOfCities){
+        ans.push(convertComb(comb));
+        console.log("ans");
+        return ans;
+    }
+
+    for (let i=start; i<Data.length && index <= Data.length - numOfCities; i++){   
+        comb[index] = Data[i];
+        combinations(Data, comb, i+1, index+1, numOfCities, category_Array, subCategory_Array, maxRent, ans);
+    }
+
+    return ans
+}
+
+// export const AllCombs = () =>{
+//     let ans = [];
+//     const Data = JSON.parse(data);
+//     return combinations(Data, [], 0, 0, Number(numOfCities), Number(maxRent), ans);
+// }
